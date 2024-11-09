@@ -1,0 +1,22 @@
+services:
+  giliover-mysql-workbench:
+    container_name: giliover-mysql-workbench
+    image: giliover-mysql-workbench
+    privileged: true
+    stdin_open: true
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - PULSE_SERVER=unix:/run/user/$UID/pulse/native
+    build:
+      context: .
+      dockerfile: ./Dockerfile.mysql-workbench
+    network_mode: "host"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/$UID/pulse:/run/user/$UID/pulse
+      - /home/$USER/config:/config
+      - /home/$USER/.mysql:/home/root/.mysql
+    devices:
+      - /dev/snd
+    restart: no
